@@ -25,6 +25,7 @@ class MainApp extends StatefulWidget {
   State<MainApp> createState() => _MainAppState();
 }
 
+// デバイス名から部屋名を取得する処理
 String getRoomName(String str) {
   if(str.split('-').length > 1) {
     String roomName = "${str.split('-')[1]}教室";
@@ -62,6 +63,7 @@ class _MainAppState extends State<MainApp> {
       RegExp re = RegExp(r'^SUSMAP-[0-9]{3}$');
       for (ScanResult r in results) {
         if (re.hasMatch(r.device.platformName)) {
+          // 一番強度の強い部屋を探索する
           if(r.rssi > maxRssi) {
             maxRssi = r.rssi;
             maxRssiSpot = r.device.platformName;
@@ -72,14 +74,15 @@ class _MainAppState extends State<MainApp> {
 
     // Restart the scan every 4 seconds to keep it continuous
     Future.delayed(const Duration(seconds: 1), () {
+      // 表示する部屋名を更新する
       String roomName = getRoomName(maxRssiSpot);
-
       if(_nearRoom != roomName && roomName != "") {
         setState(() {
           _nearRoom = roomName;
         });
       }
 
+      // 再度スキャンする
       FlutterBluePlus.stopScan();
       startScan();
     }); 
