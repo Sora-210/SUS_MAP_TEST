@@ -32,17 +32,17 @@ class _MainAppState extends State<MainApp> {
                   // スキャン結果のリスナーをセットアップ
                   var subscription = FlutterBluePlus.scanResults.listen((results) {
                     if (results.isNotEmpty) {
-                      results.forEach((r) {
+                      for (var r in results) {
                         if (re.hasMatch(r.device.platformName)) {
-                          print('======');
-                          print('強度: ${r.rssi}');
-                          print('デバイス名: ${r.device.platformName}');
-                          print('UUID: ${r.device.remoteId}');
+                          debugPrint('======');
+                          debugPrint('強度: ${r.rssi}');
+                          debugPrint('デバイス名: ${r.device.platformName}');
+                          debugPrint('UUID: ${r.device.remoteId}');
                         }
-                      });
+                      }
                     }
                   },
-                  onError: (e) => print(e));
+                  onError: (e) => debugPrint(e));
 
                   // Bluetoothが有効でパーミッションが許可されるまで待機
                   await FlutterBluePlus.adapterState
