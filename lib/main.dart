@@ -54,14 +54,6 @@ class _MainAppState extends State<MainApp> {
                 },
                 child: const Text('Start Scan'),
               ),
-              ListView.builder(
-                itemCount: 8,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text('Item $index'),
-                  );
-                },
-              ),
             ]
           )
         ),
